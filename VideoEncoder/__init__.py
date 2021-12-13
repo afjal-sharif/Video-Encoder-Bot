@@ -13,7 +13,8 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
+import psutil
+import shutil
 import logging
 import os
 from logging.handlers import RotatingFileHandler
@@ -72,6 +73,8 @@ PROGRESS = """
 • {0} of {1}
 • Speed: {2}
 • ETA: {3}
+---------------
+<b>CPU:</b> {psutil.cpu_percent()}% || <b>RAM:</b> {psutil.virtual_memory().percent}% 
 """
 
 
