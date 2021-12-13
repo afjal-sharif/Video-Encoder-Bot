@@ -17,9 +17,12 @@
 import asyncio
 import math
 import time
+import psutil
+import shutil
 
 from .. import PROGRESS
 
+server = "<b>CPU:</b> {psutil.cpu_percent()}% || <b>RAM:</b> {psutil.virtual_memory().percent}%"
 
 async def progress_for_pyrogram(current, total, ud_type, message, start):
     now = time.time()
@@ -46,7 +49,8 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
             await message.edit_text(
                 text="{}\n{}".format(
                     ud_type,
-                    tmp
+                    tmp,
+                    server
                 ),
                 parse_mode='markdown'
             )
