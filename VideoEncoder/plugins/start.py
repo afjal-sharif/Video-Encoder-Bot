@@ -13,13 +13,15 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
+import shutil, psutil
+import time
 from pyrogram import Client, filters
 
 from .. import (audio, crf, doc_thumb, preset, resolution, sudo_users, tune,
                 upload_doc)
 from ..utils.utils import check_user, output, start
 
+botStartTime = time.time()
 
 @Client.on_message(filters.command('start'))
 async def start_message(app, message):
@@ -29,6 +31,23 @@ async def start_message(app, message):
     text = f"Hey! I'm <a href='https://telegra.ph/file/11379aba315ba245ebc7b.jpg'>VideoEncoder</a>. I can encode telegram files in x264.\n\nPress /help for my commands :)"
     await message.reply(text=text, reply_markup=start)
 
+@Client.on_message(filters.command('status'))
+async def stats(app, message):
+    currentTime = get_readable_time((time.time() - botStartTime))
+    total, used, free = shutil.disk_usage('.')
+    total = get_readable_file_size(total)
+    used = get_readable_file_size(used)
+    free = get_readable_file_size(free)
+    cpuUsage = psutil.cpu_percent(interval=0.5)
+    memory = psutil.virtual_memory().percent
+    stats = f'Bot Uptime: {currentTime}\n' \
+            f'Total disk space: {total}\n' \
+            f'Used: {used}\n' \
+            f'Free: {free}\n' \
+            f'CPU: {cpuUsage}%\n' \
+            f'RAM: {memory}%' \
+            f'@BangladeshHoarding'
+    await message.reply(text=stats, reply_markup=output)
 
 @Client.on_message(filters.command('help'))
 async def help_message(app, message):
