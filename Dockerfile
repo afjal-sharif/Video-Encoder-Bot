@@ -1,4 +1,4 @@
-FROM python:3.8-slim-buster
+FROM anasty17/mltb:latest
 WORKDIR /app
 RUN chmod 777 /app
 
