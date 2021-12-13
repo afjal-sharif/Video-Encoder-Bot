@@ -16,6 +16,8 @@
 import shutil, psutil
 import time
 from pyrogram import Client, filters
+from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant, UsernameNotOccupied, ChatAdminRequired, PeerIdInvalid
+from pyrogram.types import Update, Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, ChatPermissions
 
 from .. import (audio, crf, doc_thumb, preset, resolution, sudo_users, tune,
                 upload_doc)
@@ -92,3 +94,63 @@ async def logs(app, message):
         return
     file = 'VideoEncoder/utils/logs.txt'
     await message.reply_document(file, caption='#Logs')
+
+#ForeceSub On New Membe join
+CHANNEL_USERNAME = "@BangladeshHoarding"
+WARN_MESSAGE = "দুঃখিত 😐 আপনি এখনো গ্রুপের চ্যানলে জয়েন করেননি,\n\n🔇⭕️আপনাকে সাময়িক মিউট করা হয়েছে⭕️🔇 \n\nগ্রুপের চ্যানেল গুলোতে জয়েন করার পর আনমিউট বাটনে ক্লিক করে আনমিউট হয়ে নিন,\n আনমিউট হওয়ার পর গ্রুপটি ব্যবহার করতে পারবেন।"
+static_data_filter = filters.create(lambda _, __, query: query.data == "hukaidaala")
+
+@Client.on_callback_query(static_data_filter)
+def _onUnMuteRequest(client, lel):
+  user_id = lel.from_user.id
+  chat_id = lel.message.chat.id
+  chat_u = CHANNEL_USERNAME #channel for force sub
+  if chat_u:
+    channel = chat_u
+    chat_member = client.get_chat_member(chat_id, user_id)
+    if chat_member.restricted_by:
+      if chat_member.restricted_by.id == (client.get_me()).id:
+          try:
+            client.get_chat_member(channel, user_id)
+            client.unban_chat_member(chat_id, user_id)
+            if lel.message.reply_to_message.from_user.id == user_id:
+              lel.message.delete()
+          except UserNotParticipant:
+            client.answer_callback_query(lel.id, text="❗ চ্যানেল গুলোতে জয়েন করার পর আনমিউট বাটন আবার প্রেস করুন", show_alert=True)
+      else:
+        client.answer_callback_query(lel.id, text="❗ এডমিন আপনাকে আনমিউট করে দিয়েছে....", show_alert=True)
+    else:
+      if not client.get_chat_member(chat_id, (client.get_me()).id).status == 'administrator':
+        client.send_message(chat_id, f"❗ **{lel.from_user.mention} is trying to Unmute himself but I can't unmute him because I am not an admin in this chat.")
+      else:
+        client.answer_callback_query(lel.id, text="❗ Warning: Don't click the button if you can speak freely.", show_alert=True)
+
+@Client.on_message(filters.text & ~filters.private & ~filters.edited, group=1)
+def _check_member(client, message):
+  chat_id = message.chat.id
+  chat_u = CHANNEL_USERNAME #channel for force sub
+  if chat_u:
+    user_id = message.from_user.id
+    if not client.get_chat_member(chat_id, user_id).status in ("administrator", "creator"):
+      channel = chat_u
+      try:
+        client.get_chat_member(channel, user_id)
+      except UserNotParticipant:
+         try: #tahukai daala
+              chat_u = chat_u.replace('@','')
+              tauk = message.from_user.mention
+              sent_message = message.reply_text(
+                WARN_MESSAGE,
+                disable_web_page_preview=True,
+                reply_markup=InlineKeyboardMarkup(
+                  [[
+                  InlineKeyboardButton("📢 𝐉𝐨𝐢𝐧 𝐍𝐨𝐰 1️⃣", url=f"https://t.me/Bangladesh_Hoarding"),
+                  InlineKeyboardButton("📢 𝐉𝐨𝐢𝐧 𝐍𝐨𝐰 2️⃣", url=f"https://t.me/{chat_u}")],
+                  [InlineKeyboardButton("✅ 𝐔𝐧𝐦𝐮𝐭𝐞 𝐌𝐞 ✅", callback_data="hukaidaala")]]))
+              client.restrict_chat_member(chat_id, user_id, ChatPermissions(can_send_messages=False))               
+         except ChatAdminRequired:
+           sent_message.edit("❗ **I am not an admin here.**\n__Make me admin with ban user permission and add me again.\n#Leaving this chat...__")
+           client.leave_chat(chat_id)
+      except ChatAdminRequired:
+        client.send_message(chat_id, text=f"❗ **I am not an admin in @{channel}**\n__Make me admin in the channel and add me again.\n#Leaving this chat...__")
+        client.leave_chat(chat_id)
