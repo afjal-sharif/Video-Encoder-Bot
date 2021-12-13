@@ -78,7 +78,7 @@ async def stats(app, message):
             f'Used: {used}\n' \
             f'Free: {free}\n' \
             f'CPU: {cpuUsage}%\n' \
-            f'RAM: {memory}%' \
+            f'RAM: {memory}%\n' \
             f'@BangladeshHoarding'
     await message.reply(text=stats, reply_markup=output)
 
