@@ -22,15 +22,15 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from .. import sudo_users
 
 output = InlineKeyboardMarkup([
-    [InlineKeyboardButton("BDH", url="https://t.mt/BangladeshHoarding"),
-     InlineKeyboardButton("Open.Movies", url="https://t.mt/Bangladesh_Hoarding")]
+    [InlineKeyboardButton("BDH", url="https://t.me/BangladeshHoarding"),
+     InlineKeyboardButton("Open.Movies", url="https://t.me/Bangladesh_Hoarding")]
 ])
 
 start = InlineKeyboardMarkup([
-    [InlineKeyboardButton("BDH", url="https://t.mt/BangladeshHoarding"),
+    [InlineKeyboardButton("BDH", url="https://t.me/BangladeshHoarding"),
      InlineKeyboardButton("Disclaime", url="https://t.me/BangladeshHoarding/282")],
-    [InlineKeyboardButton("Support", url="https://t.mt/BDH_PM_bot"),
-     InlineKeyboardButton("Open.Movies", url="https://t.mt/Bangladesh_Hoarding")]
+    [InlineKeyboardButton("Support", url="https://t.me/BDH_PM_bot"),
+     InlineKeyboardButton("Open.Movies", url="https://t.me/Bangladesh_Hoarding")]
 ])
 
 
