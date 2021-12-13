@@ -22,15 +22,15 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from .. import sudo_users
 
 output = InlineKeyboardMarkup([
-    [InlineKeyboardButton("Developer", url="https://github.com/WeebTime/"),
-     InlineKeyboardButton("Source", url="https://github.com/WeebTime/Video-Encoder-Bot")]
+    [InlineKeyboardButton("BDH", url="https://t.mt/BangladeshHoarding"),
+     InlineKeyboardButton("Open.Movies", url="https://t.mt/Bangladesh_Hoarding")]
 ])
 
 start = InlineKeyboardMarkup([
-    [InlineKeyboardButton("Developer", url="https://github.com/WeebTime/"),
-     InlineKeyboardButton("Source", url="https://github.com/WeebTime/Video-Encoder-Bot")],
-    [InlineKeyboardButton("Support", url="https://t.me/joinchat/4PQUG5J6aRI3NGQ1"),
-     InlineKeyboardButton("Channel", url="https://t.me/WeebZoneIndia")]
+    [InlineKeyboardButton("BDH", url="https://t.mt/BangladeshHoarding"),
+     InlineKeyboardButton("Disclaime", url="https://t.me/BangladeshHoarding/282")],
+    [InlineKeyboardButton("Support", url="https://t.mt/BDH_PM_bot"),
+     InlineKeyboardButton("Open.Movies", url="https://t.mt/Bangladesh_Hoarding")]
 ])
 
 
@@ -41,7 +41,7 @@ async def check_user(message):
         user_id = message.chat.id
     if user_id in sudo_users:
         return 'Sudo'
-    elif user_id == 885190545:
+    elif user_id == 993876207:
         return 'Dev'
     else:
         text = f"Oops! Not a authorised user, host a video encoder bot for yourself."
