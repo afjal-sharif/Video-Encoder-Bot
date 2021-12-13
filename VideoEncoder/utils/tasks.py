@@ -16,7 +16,8 @@
 
 import os
 import time
-
+import psutil
+import shutil
 from pyrogram.errors.exceptions.bad_request_400 import (MessageIdInvalid,
                                                         MessageNotModified)
 from pyrogram.types import Message
