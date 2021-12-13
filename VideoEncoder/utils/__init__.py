@@ -27,6 +27,7 @@ RESOLUTION:
 >> 720 
 >> 480 
 >> 360 
+
 PRESET:
 >> uf = ultrafast
 >> sf = superfast
@@ -38,6 +39,7 @@ AUDIO (Codec):
 >> opus
 >> aac
 >> copy
+
 CRF: It's percentage of compress rate
 >>  15 - 40 
 '''
