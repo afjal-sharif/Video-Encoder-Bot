@@ -93,6 +93,8 @@ async def help_message(app, message):
 • /start - Introduction.
 • /vset - View Settings.
 • /sthumb - Save Thumb
+• /status - Status of the bot
+• /guide - See it
 • /dthumb - Clear Thumb.
 • /logs - check logs."""
     await message.reply(text=text, reply_markup=output)
