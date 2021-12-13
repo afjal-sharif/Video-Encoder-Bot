@@ -24,6 +24,7 @@ from .. import (audio, crf, doc_thumb, preset, resolution, sudo_users, tune,
 from ..utils.utils import check_user, output, start
 
 botStartTime = time.time()
+SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
 def get_readable_time(seconds: int) -> str:
     result = ''
