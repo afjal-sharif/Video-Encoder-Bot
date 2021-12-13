@@ -73,8 +73,6 @@ PROGRESS = """
 • {0} of {1}
 • Speed: {2}
 • ETA: {3}
----------------
-<b>CPU:</b> {psutil.cpu_percent()}% || <b>RAM:</b> {psutil.virtual_memory().percent}% 
 """
 
 
