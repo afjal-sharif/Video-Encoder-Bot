@@ -40,7 +40,7 @@ async def handle_task(message: Message):
         filepath = await message.download(
             file_name=download_dir,
             progress=progress_for_pyrogram,
-            progress_args=("Downloading...", msg, c_time))
+            progress_args=("🔻Downloading...", msg, c_time))
         print(f'[Download]: {filepath}')
         await msg.edit_text('<code>Encoding...</code>')
         new_file = await encode(filepath)
@@ -86,7 +86,7 @@ async def handle_upload(new_file, message, msg):
             reply_markup=output,
             parse_mode=None,
             progress=progress_for_pyrogram,
-            progress_args=("Uploading ...", msg, c_time)
+            progress_args=("🔺Uploading ...", msg, c_time)
         )
     else:
         await message.reply_video(
@@ -100,6 +100,6 @@ async def handle_upload(new_file, message, msg):
             width=width,
             height=height,
             progress=progress_for_pyrogram,
-            progress_args=("Uploading ...", msg, c_time)
+            progress_args=("🔺Uploading ...", msg, c_time)
         )
     os.remove(new_file)
