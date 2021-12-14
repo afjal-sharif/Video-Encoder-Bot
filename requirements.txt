@@ -5,3 +5,4 @@ hachoir
 ffmpeg-python
 psutil
 requests
+heroku3
