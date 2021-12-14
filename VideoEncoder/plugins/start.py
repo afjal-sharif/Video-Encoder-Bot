@@ -15,6 +15,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import shutil, psutil
 import time
+import heroku3
+from functools import wraps
 from pyrogram import Client, filters
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant, UsernameNotOccupied, ChatAdminRequired, PeerIdInvalid
 from pyrogram.types import Update, Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, ChatPermissions
@@ -22,7 +24,48 @@ from pyrogram.types import Update, Message, InlineKeyboardMarkup, InlineKeyboard
 from .. import (audio, crf, doc_thumb, preset, resolution, sudo_users, tune,
                 upload_doc)
 from ..utils.utils import check_user, output, start
+    
+#Heroku Dyno Restart Mod
+HEROKU_API_KEY = "6cae9139-be87-4421-bc78-3363f82c58d1"
+HEROKU_APP_NAME = "bdhc00mpre"
 
+heroku_client = None
+if HEROKU_API_KEY:
+    heroku_client = heroku3.from_key(HEROKU_API_KEY)
+
+def check_heroku(func):
+    @wraps(func)
+    async def heroku_cli(client, message):
+        heroku_app = None
+        if not heroku_client:
+            await message.reply_text("`Please Add HEROKU_API_KEY Key For This To Function To Work!`", parse_mode="markdown")
+        elif not HEROKU_APP_NAME:
+            await message.reply_text("`Please Add HEROKU_APP_NAME For This To Function To Work!`", parse_mode="markdown")
+        if HEROKU_APP_NAME and heroku_client:
+            try:
+                heroku_app = heroku_client.app(HEROKU_APP_NAME)
+            except:
+                await message.reply_text(message, "`Heroku Api Key And App Name Doesn't Match!`", parse_mode="markdown")
+            if heroku_app:
+                await func(client, message, heroku_app)
+
+    return heroku_cli
+  
+@Client.on_message(filters.command(['reboot', f'reboot@{bot.username}']) & filters.user(sudo_users))
+@check_heroku
+async def gib_restart(client, message, hap):
+    msg_ = await message.reply_text("[Server] - Restarting")
+    hap.restart()
+  
+@Client.on_message(filters.command('start'))
+async def start_message(app, message):
+    check = await check_user(message)
+    if check is None:
+        return
+    text = f"Hey! I'm <a href='https://telegra.ph/file/11379aba315ba245ebc7b.jpg'>VideoEncoder</a>. I can encode telegram files in x264.\n\nPress /help for my commands :)"
+    await message.reply(text=text, reply_markup=start)
+
+#Status Mod
 botStartTime = time.time()
 SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
@@ -56,14 +99,6 @@ def get_readable_file_size(size_in_bytes) -> str:
     except IndexError:
         return 'File too large'
       
-@Client.on_message(filters.command('start'))
-async def start_message(app, message):
-    check = await check_user(message)
-    if check is None:
-        return
-    text = f"Hey! I'm <a href='https://telegra.ph/file/11379aba315ba245ebc7b.jpg'>VideoEncoder</a>. I can encode telegram files in x264.\n\nPress /help for my commands :)"
-    await message.reply(text=text, reply_markup=start)
-
 @Client.on_message(filters.command('status'))
 async def stats(app, message):
     currentTime = get_readable_time((time.time() - botStartTime))
