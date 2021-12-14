@@ -30,7 +30,7 @@ from .. import (audio, crf, doc_thumb, preset, resolution, sudo_users, tune,
                 upload_doc)
 
 server = f"<b>CPU:</b> {psutil.cpu_percent()}% || <b>RAM:</b> {psutil.virtual_memory().percent}%"
-donewithcurrentprofile = f"Video Encoded Successfully! \n\n <b>Encode Settings: \n</b>Resolution: <code>{resolution}</code> | <code>CRF: {crf}</code> \n Tune: <code>{tune}</code> | <code> Audio:{audio} </code> \n<code>Preset: {preset}</code>"
+donewithcurrentprofile = f"Video Encoded Successfully! \n\n <b>Encode Settings: \n</b>Resolution: <code>{resolution}</code> | <code>CRF: {crf}</code> \n Tune: <code>{tune}</code> | <code> Audio:{audio} </code> \n<code>Preset: {preset}</code> \n {server}"
 async def on_task_complete():
     del data[0]
     if len(data) > 0:
