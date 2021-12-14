@@ -27,10 +27,11 @@ output = InlineKeyboardMarkup([
 ])
 
 start = InlineKeyboardMarkup([
-    [InlineKeyboardButton("BDH", url="https://t.me/BangladeshHoarding"),
-     InlineKeyboardButton("Disclaime", url="https://t.me/BangladeshHoarding/282")],
+    [InlineKeyboardButton("Infinity Files", url="https://t.me/InfinityFiles"),
+     InlineKeyboardButton("Open.Movies", url="https://t.me/Bangladesh_Hoarding")],
     [InlineKeyboardButton("Support", url="https://t.me/BDH_PM_bot"),
-     InlineKeyboardButton("Open.Movies", url="https://t.me/Bangladesh_Hoarding")]
+     InlineKeyboardButton("Disclaime", url="https://t.me/BangladeshHoarding/282")]
+     
 ])
 
 
@@ -44,7 +45,7 @@ async def check_user(message):
     elif user_id == 993876207:
         return 'Dev'
     else:
-        text = f"Oops! Not a authorised user, host a video encoder bot for yourself."
+        text = f"Oops! Not a authorised user, @InfinityFiles. To Use this bot"
         await message.reply(text=text, reply_markup=start)
         return None
 
