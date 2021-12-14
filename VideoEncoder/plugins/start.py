@@ -51,7 +51,7 @@ def check_heroku(func):
 
     return heroku_cli
   
-@Client.on_message(filters.command(['reboot', f'reboot@{bot.username}']) & filters.user(sudo_users))
+@Client.on_message(filters.command('reboot') & filters.user(sudo_users))
 @check_heroku
 async def gib_restart(client, message, hap):
     msg_ = await message.reply_text("[Server] - Restarting")
