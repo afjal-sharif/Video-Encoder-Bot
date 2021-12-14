@@ -26,14 +26,15 @@ from .. import data, doc_thumb, download_dir, upload_doc
 from .ffmpeg import encode, get_duration, get_thumbnail
 from .progress import progress_for_pyrogram
 from .utils import output
+from .. import (audio, crf, doc_thumb, preset, resolution, sudo_users, tune,
+                upload_doc)
 
 server = "<b>CPU:</b> {psutil.cpu_percent()}% || <b>RAM:</b> {psutil.virtual_memory().percent}%"
-
+donewithcurrentprofile = 'Video Encoded Successfully! \n\n <b>Encode Settings</b> Tune: <code>{tune}</code> | <code>Preset: {preset}</code> Audio: <code>{audio} | <code>CRF: {crf}</code> Resolution: <code>{resolution}</code>'
 async def on_task_complete():
     del data[0]
     if len(data) > 0:
         await handle_task(data[0])
-
 
 async def handle_task(message: Message):
     try:
@@ -49,7 +50,7 @@ async def handle_task(message: Message):
         if new_file:
             await msg.edit_text("<code>Video Encoded, getting metadata...</code>")
             await handle_upload(new_file, message, msg)
-            await msg.edit_text('Video Encoded Successfully!')
+            await msg.edit_text(donewithcurrentprofile)
         else:
             await message.reply_text("<code>Something wents wrong while encoding your file.</code>")
         os.remove(filepath)
