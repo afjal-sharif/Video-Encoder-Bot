@@ -24,7 +24,7 @@ from pyrogram import Client, filters
 from ..utils.utils import check_user, convert_to_jpg, get_file_mimetype
 
 
-@Client.on_message(filters.command('sthumb'))
+@Client.on_message(filters.command(['sthumb', 'sthumb@BD_Encoderbot']))
 async def savethumbnail(client, message):
     check = await check_user(message)
     if check is None:
@@ -62,7 +62,7 @@ async def savethumbnail(client, message):
         await message.reply_text('Cannot find thumbnail')
 
 
-@Client.on_message(filters.command('dthumb'))
+@Client.on_message(filters.command(['dthumb', 'dthumb@BD_Encoderbot']))
 async def rmthumbnail(client, message):
     check = await check_user(message)
     if check is None:
