@@ -42,7 +42,7 @@ async def handle_task(message: Message):
         filepath = await message.download(
             file_name=download_dir,
             progress=progress_for_pyrogram,
-            progress_args=("🔻Downloading...\n\n<b>CPU:</b> {psutil.cpu_percent()}% || <b>RAM:</b> {psutil.virtual_memory().percent}%\n", msg, c_time))
+            progress_args=("🔻Downloading...", msg, c_time, server))
         print(f'[Download]: {filepath}')
         await msg.edit_text('<code>Encoding...</code>')
         new_file = await encode(filepath)
