@@ -51,10 +51,10 @@ def check_heroku(func):
 
     return heroku_cli
   
-@Client.on_message(filters.command('reboot') & filters.user(sudo_users))
+@Client.on_message(filters.command(['reboot', 'reboot@BD_Encoderbot']) & filters.user(sudo_users))
 @check_heroku
 async def gib_restart(client, message, hap):
-    msg_ = await message.reply_text("[Server] - Restarting")
+    msg_ = await message.reply_text("[Server] - Restarting..Please wait few Minites then use")
     hap.restart()
   
 @Client.on_message(filters.command('start'))
@@ -99,7 +99,7 @@ def get_readable_file_size(size_in_bytes) -> str:
     except IndexError:
         return 'File too large'
       
-@Client.on_message(filters.command('status'))
+@Client.on_message(filters.command(['status', 'status@BD_Encoderbot']))
 async def stats(app, message):
     currentTime = get_readable_time((time.time() - botStartTime))
     total, used, free = shutil.disk_usage('.')
@@ -117,7 +117,7 @@ async def stats(app, message):
             f'@BangladeshHoarding'
     await message.reply(text=stats, reply_markup=output)
 
-@Client.on_message(filters.command('help'))
+@Client.on_message(filters.command(['help', 'help@BD_Encoderbot']))
 async def help_message(app, message):
     check = await check_user(message)
     if check is None:
@@ -135,7 +135,7 @@ async def help_message(app, message):
     await message.reply(text=text, reply_markup=output)
 
 
-@Client.on_message(filters.command('vset'))
+@Client.on_message(filters.command(['vset', 'vset@BD_Encoderbot']))
 async def vset(app, message):
     check = await check_user(message)
     if check is None:
@@ -155,7 +155,7 @@ Doc thumb: <code>{'True' if (doc_thumb) else 'False'}</code>
     await message.reply(text=text, reply_markup=start)
 
 
-@Client.on_message(filters.command('logs'))
+@Client.on_message(filters.command(['logs', 'logs@BD_Encoderbot']))
 async def logs(app, message):
     check = await check_user(message)
     if check is None:
