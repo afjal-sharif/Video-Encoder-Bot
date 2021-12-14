@@ -220,5 +220,5 @@ def _check_member(client, message):
            sent_message.edit("❗ **I am not an admin here.**\n__Make me admin with ban user permission and add me again.\n#Leaving this chat...__")
            client.leave_chat(chat_id)
       except ChatAdminRequired:
-        client.send_message(chat_id, text=f"❗ **I am not an admin in @{channel}**\n__Make me admin in the channel and add me again.\n#Leaving this chat...__")
+        client.send_message(chat_id, text=f"❗ **I am not an admin in {channel}**\n__Make me admin in the channel and add me again.\n#Leaving this chat...__")
         client.leave_chat(chat_id)
