@@ -32,6 +32,7 @@ video_mimetype = [
     "video/x-matroska",
     "video/webm",
     "video/x-m4v",
+    "video/ts",
     "video/quicktime",
     "video/mpeg"
 ]
